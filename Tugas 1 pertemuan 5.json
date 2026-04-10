@@ -1,0 +1,115 @@
+{
+  "name": "Tugas 1 pertemuan 5",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is hinufii. How can I assist you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        96,
+        16
+      ],
+      "id": "84f94f94-2f46-462f-bbe0-4d9bc3fe2b8b",
+      "name": "When chat message received",
+      "webhookId": "d493d2ac-aac2-4fac-846d-87fc478c3fe0"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Anda adalah chatbot FAQ kampus yang membantu mahasiswa mengetahui berbagai informasi kampus.\n\nGunakan daftar informasi berikut sebagai referensi ketika menjawab pertanyaan pengguna.\n\nTopik ; Deskripsi ; Keterangan\n\nJadwal Kuliah ; Informasi terkait waktu pelaksanaan perkuliahan mahasiswa ; Jadwal kuliah dapat diakses melalui portal akademik kampus masing-masing atau sistem informasi mahasiswa.\n\nUKM (Unit Kegiatan Mahasiswa) ; Organisasi mahasiswa sebagai wadah pengembangan minat dan bakat ; Mahasiswa dapat mendaftar UKM melalui kegiatan open recruitment yang biasanya diadakan setiap awal semester.\n\nBeasiswa ; Bantuan dana pendidikan bagi mahasiswa ; Informasi beasiswa dapat dilihat di website resmi kampus atau bagian kemahasiswaan.\n\nAdministrasi Kampus ; Layanan administrasi seperti KRS, pembayaran, dan surat menyurat ; Mahasiswa dapat mengakses layanan administrasi melalui bagian akademik atau sistem online kampus.\n\nJawab pertanyaan dengan jelas, singkat, dan ramah.\nJika pertanyaan di luar topik atau tidak tersedia dalam data, jawab dengan sopan bahwa informasi tidak tersedia."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        304,
+        16
+      ],
+      "id": "54484e83-0d01-4a39-9cec-976cf1be58e4",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        400,
+        192
+      ],
+      "id": "11d7875c-8a5d-4c27-a941-c2f91687bf94",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "model": "arcee-ai/trinity-large-preview:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        256,
+        176
+      ],
+      "id": "116034ae-0711-4337-b3e3-221529a67a6b",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "jJiCnuOjOGyqqUd6",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "134ce699-faf3-4ae0-a803-089787f167bc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e447cc354e205ed686c6f7d21781acdfaf732dc02557e38d424812e441aa597b"
+  },
+  "id": "1mmZDhtRYAebtJPV",
+  "tags": []
+}
